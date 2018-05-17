@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<style type="text/css">
+  body{
+    margin:0;
+    /*overflow: hidden;*/
+  }
+  #canvas{
+    display: block;
+    margin: 0 auto;
+  }
+  
+  #range{
+    display: block;
+    width: 800px;
+    margin:20px auto;
+  }
+</style>
+
+<body>
+    <div class="waikuang" >
+      <canvas id="canvas" width="800" height="500">
+       
+      </canvas>
+    </div>
+  <input type="range" id="range" min="0.5" max="3" step="0.01" value="1">
+</body>
+<script type="text/javascript">
+  
+  var canvas= document.getElementById('canvas');
+  var context=canvas.getContext("2d");
+  var range=document.getElementById('range')
+    var img=new Image();
+    img.src="111.jpg";
+
+    img.onload=function(){
+      context.drawImage(img,0,0,canvas.width,canvas.height);
+    }
+
+    range.onchange=function(){
+      draw()
+    }
+    function draw(){
+     var scale=range.value;
+     var imgW=scale*canvas.width;
+     var imgH=scale*canvas.height;
+     var x=canvas.width/2-imgW/2;
+     var y=canvas.height/2-imgH/2;
+     context.clearRect(0,0,canvas.width,canvas.height);
+     context.drawImage(img,x,y,imgW,imgH);
+    }
+
+      
+</script>
+</html>

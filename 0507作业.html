@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style type="text/css">
+	body{
+		margin:0;
+		/*overflow: hidden;*/
+	}
+	.container{
+		width: 1000px;
+		margin:0 auto; 
+		
+	}
+</style>
+<body>
+  <div class="container">
+     <canvas id="canvas" width="1000" height="600">
+  		
+	 </canvas>
+  </div>
+	
+</body>
+<script type="text/javascript">
+	var canvas= document.getElementById('canvas');
+	var ctx=canvas.getContext("2d");
+	var ball={
+    x : 100,
+    y : 100,
+    r : 50 , 
+    vx : 10 ,
+    // vy : 10,
+  }
+    setInterval(draw,50);
+    function draw(){
+    ctx.beginPath();
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.save()
+    var bgcolor = ctx.createRadialGradient(ball.x-15,ball.y-15,ball.r-40,ball.x,ball.y,ball.r);
+    bgcolor.addColorStop(0,"#fff");
+    bgcolor.addColorStop(1,"#bfbfbf");
+    ball.x=ball.x+ball.vx;
+    if ((ball.x+ball.r)>canvas.width){
+      ball.vx=-ball.vx
+    }
+    if ((ball.x-ball.r)<0){
+      ball.vx=-ball.vx
+    }
+
+    // ball.y=ball.y+ball.vy;
+    ctx.fillStyle=bgcolor;
+    ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);
+    ctx.closePath()
+    ctx.fill();
+    ctx.restore();
+     }
+</script>
+</html>

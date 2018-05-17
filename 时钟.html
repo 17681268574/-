@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style type="text/css">
+	body{
+	/*	margin:0;*/
+		/*overflow: hidden;*/
+	}
+	.box{
+    margin:25px auto;
+		width: 40%;
+	}
+  #canvas{
+    background-color: #FFA47F;
+  }
+</style>
+<body>
+  <div class="box">
+     <canvas id="canvas"></canvas>
+  </div>
+	
+</body>
+<script type="text/javascript">
+	var canvas= document.getElementById('canvas');
+  var box = document.querySelector(".box");
+	var ctx=canvas.getContext("2d");
+  canvas.width=box.clientWidth;
+  canvas.height=box.clientWidth;
+  r = canvas.width/2;
+  function drawTime(){
+    ctx.save();
+    ctx.beginPath();
+    ctx.translate(r,r);
+    // ctx.shadowColor="#0BAB93"
+    // ctx.shadowBlur= 3;
+    ctx.lineWidth= 16;
+    ctx.strokeStyle="#AB4C25"
+    ctx.arc(0,0,r-10,0,Math.PI*2);
+
+
+    ctx.stroke()
+    for(i=0;i<60;i++){
+      
+      var rad = Math.PI*2/60*i;
+      var tx = Math.cos(rad)*(r-35)
+      var ty = Math.sin(rad)*(r-35)
+      ctx.beginPath();
+      if(i%5==0){
+        ctx.fillStyle="#AB4C25"
+      }else{
+        ctx.fillStyle="#F77F4E"
+      }
+      
+      ctx.arc(tx,ty,3,0,Math.PI*2);
+      ctx.fill();
+    }
+
+    var num= [3,4,5,6,7,8,9,10,11,12,1,2];
+    ctx.font="15px 微软雅黑";
+    ctx.fillStyle="#AB4C25"
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
+    num.forEach(function(value,index){
+      var rad = Math.PI*2/12*index;
+      var tx1 = Math.cos(rad)*(r-50);
+          ty1 = Math.sin(rad)*(r-50);
+          ctx.fillText(value,tx1,ty1);
+
+    })
+    ctx.restore();
+    ctx.beginPath();
+    ctx.fillStyle="#F77F4E"
+    ctx.arc(canvas.width/2,canvas.height/2,2,0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+
+  }
+  function drawS(s){
+    var rad = Math.PI*2/60*s;
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineWidth= "2" ;
+    ctx.lineCap="round"
+    ctx.strokeStyle= "#4EF7DE"
+    ctx.translate(r,r); 
+    ctx.rotate(rad);
+    ctx.moveTo(0,15);
+    ctx.lineTo(0,-(r-65));
+    ctx.stroke();
+    ctx.restore();
+  }
+  function drawM(m){
+    var rad = Math.PI*2/60*m;
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineWidth= "3" ;
+    ctx.lineCap="round"
+    ctx.strokeStyle= "#0BAB93"
+    ctx.translate(r,r); 
+    ctx.rotate(rad);
+    ctx.moveTo(0,15);
+    ctx.lineTo(0,-(r-100));
+    ctx.stroke();
+    ctx.restore();
+  }
+  function drawH(h,m){
+    var rad = Math.PI*2/12*h;
+    var radm= Math.PI*2/12/60*m;
+    ctx.save();
+    ctx.beginPath();
+    ctx.lineWidth= "5" ;
+    ctx.lineCap="round"
+    ctx.strokeStyle= "#AB4C25"
+    ctx.translate(r,r); 
+    ctx.rotate(rad+radm);
+    ctx.moveTo(0,15);
+    ctx.lineTo(0,-(r-150));
+    ctx.stroke();
+    ctx.restore();
+  }
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    var date = new Date();
+    var H = date.getHours();
+    var M = date.getMinutes();
+    var S = date.getSeconds();
+    
+    drawS(S);
+    drawM(M);
+    drawH(H,M);
+    drawTime();
+  }
+  draw();
+  setInterval(draw,1000);
+  
+	// draw();
+
+  
+
+</script>
+</html>

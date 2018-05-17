@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<style type="text/css">
+  body{
+    margin:0;
+    /*overflow: hidden;*/
+  }
+  /*#canvas{
+    margin:0px 0px 0px 400px; 
+  }*/
+</style>
+
+<body>
+  <canvas id="canvas" width="1000" height="500">
+    
+  </canvas>
+</body>
+<script type="text/javascript">
+  
+  var canvas= document.getElementById('canvas');
+  
+  var context=canvas.getContext("2d");
+
+  // 1.画圆角矩形
+  // function drawRoundRect(x,y,w,h,radius){
+  //   context.beginPath();
+  //   context.arc(x+radius,y+radius,radius,Math.PI,Math.PI*1.5);
+  //   context.lineTo(x+w-radius,y);
+  //   context.arc(x+w-radius,y+radius,radius,Math.PI*1.5,0);
+  //   context.lineTo(x+w,y+h-radius);
+  //   context.arc(x+w-radius,y+h-radius,radius,0,Math.PI*0.5);
+  //   context.lineTo(x+radius,y+h);
+  //   context.arc(x+radius,y+h-radius,radius,Math.PI*0.5,Math.PI);
+  //   context.closePath();
+  //   context.stroke();
+  //     }
+  //     drawRoundRect(80,80,500,500,60);
+
+  // 2.画五角星
+  // function drawStar(x,y,R,r,rot){
+  //   context.beginPath();
+  //     for(var i=0;i<5;i++){
+
+  //       context.lineTo( Math.cos( (18+72*i-rot) / 180*Math.PI) *R+x , -Math.sin( (18 + 72 *i-rot) / 180 * Math.PI) *R+ y );
+  //       context.lineTo( Math.cos( (54+72*i-rot) / 180*Math.PI) *r+x , -Math.sin( (54 + 72 *i-rot) / 180 * Math.PI) *r +y );
+        
+  //   }
+  //       context.closePath();
+  //       context.stroke();
+  // }
+  //  drawStar(300,300,300,150);
+  
+  // 3.随机值
+  function randomIntFromRange(min,max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+  }
+
+
+  // 4. 回调函数案例
+
+     // creatBackCanvas(function(backCanvas){
+     //   var pat=context.createPattern(backCanvas,"repeat");
+     //   context.fillStyle=pat;
+     //   context.fillRect(0,0,canvas.width,canvas.height);
+
+     // })
+
+
+
+
+     // function creatBackCanvas(func){
+     //      var backCanvas=document.createElement("canvas");
+     //      backCanvas.width=500;
+     //      backCanvas.height=500;
+     //      var context=backCanvas.getContext("2d");
+
+     //      var img = new Image();
+     //      img.src="123.png";
+
+     //      img.onload=function(){
+     //       var pat=context.createPattern(img,"repeat");
+     //        context.fillStyle=pat;
+     //        context.fillRect(0,0,500,500);
+     //        func(backCanvas);
+
+     //      }
+
+     // }
+
+     
+
+     // var dx=1;
+     // var dy=1;
+     // var x=canvas.width/2;
+     // var y=canvas.height/2;
+     
+     // r=150;
+
+     //  requestAnimationFrame(animate);
+
+     // function animate(){
+     //  // context.fillRect(0,0,500,500);
+     //  context.clearRect(0,0,canvas.width,canvas.height);
+     //  context.fillRect(0,0,canvas.width,canvas.height);
+     //  context.beginPath();
+     //   x=x+dx;
+     //   y=y+dx;
+     //  context.arc(x,y,150,0,Math.PI*2);
+     //  context.fillStyle="#fff";
+     //  context.fill();
+     //  context.clip();
+
+     //  context.font="bolder 100px 微软雅黑";
+     //  context.textAlign="center";
+     //  context.textBaseline="middle";
+     //  context.fillStyle="#058";
+     //  context.fillText("canvas",canvas.width/2,canvas.height/2);
+     //  console.log(x);
+     //  requestAnimationFrame(animate);
+
+     // }
+    // context.globalCompositeOperation="lighter"
+    // context.globalCompositeOperation="xor"
+
+    ball_arr=[];
+    
+    color=[
+    "#A52631",
+    "#F04552",
+    "#054958",
+    "#07DBF3",
+    "#05F1F5",
+    ];
+ 
+ var movex;
+ var movey;
+canvas.onmousemove=function(e){
+   var x=e.clientX;
+   var y=e.clientX;
+    movex=x;
+    movey=y;
+}
+       
+
+    function ball(x,y,r,dx,dy,RBG){
+    this.x=x;
+    this.y=y;
+    this.r=r;
+    this.dx=dx;
+    this.dy=dy;
+    this.RBG=RBG
+    this.r1=r;
+
+
+
+    this.draw=function(){
+      context.beginPath()
+     
+     if(Math.abs(this.x-movex)<30||Math.abs(this.y-movey)<30){
+  this.r++;
+  if(this.r>30){
+    this.r=30;
+  }
+}
+else{
+  this.r--;
+  if(this.r<this.r1){
+    this.r=this.r1;
+  }
+}
+     
+      context.arc(this.x,this.y,this.r,0,Math.PI*2);
+      context.fillStyle=RBG;
+      context.fill();
+      }
+
+    this.update=function(){
+    
+      this.x+=this.dx;
+      this.y+=this.dy;
+      
+      if(this.x+this.r>canvas.width||this.x<this.r){
+        this.dx=-this.dx};
+      if(this.y+this.r>canvas.height||this.y<this.r){
+        this.dy=-this.dy;
+      };
+    }
+
+    
+    
+        
+        
+    }
+    
+
+    for(var i=0;i<200;i++){
+      var dx=(Math.random()-0.5)*2;
+      var dy=(Math.random()-0.5)*2;
+      var x=randomIntFromRange(0,canvas.width);
+      var y=randomIntFromRange(0,canvas.height);
+      var r=randomIntFromRange(2,10);
+      var RBG=color[randomIntFromRange(0,5)];
+  
+    ball_arr.push(new ball(x,y,r,dx,dy,RBG));
+
+    }
+    requestAnimationFrame(animate);
+
+    function animate(){
+      context.clearRect(0,0,canvas.width,canvas.height);
+      for(var i=0;i<ball_arr.length;i++){
+        ball_arr[i].draw();
+        ball_arr[i].update();
+    }
+      
+      requestAnimationFrame(animate);
+    }
+      
+  
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

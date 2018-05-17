@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+  </head>
+  <body>
+    <div>用户名：<input type="text" id="name" value="DavHoon" /> </div>
+    <div>手机号：<input type="number" id="phone" value="13345678912" /> </div>
+    <div>邮箱名：<input type="text" id="email" value="DavHoon@youtobe.com" /> </div>
+    <div>博客名：<input type="text" id="blog" value="DavHoon.blog.com" /> </div>
+    <div><input type="button" id="btn" value="提交"> </div>
+    
+    <table id="table" border="1"></table>
+    
+    <script type="text/javascript">
+      var name = document.querySelector("#name").value;
+      var phone = document.querySelector("#phone").value;
+      var email = document.querySelector("#email").value;
+      var blog = document.querySelector("#blog").value;
+      var btn = document.querySelector("#btn");
+      var table = document.querySelector("#table");
+      var dataDB;
+      window.onload = createDatabase;
+      //创建数据库的方法
+      function createDatabase(){
+        var databaseInfo = {
+          databaseName:'userDatabase',   //数据库名称
+          databaseVersion:4   //数据库的版本号，是一非负整数
+        }
+        //  如果有（数据库名称） 则打开数据库，没有 则  创建数据
+        var requset =  indexedDB.open(databaseInfo.databaseName,databaseInfo.databaseVersion);
+        
+        //数据库改变或者版本更新
+        requset.onupgradeneeded = function(res){
+          dataDB = res.target.result;
+          //创建一个表
+          dataDB.createObjectStore("userInfo",{
+            //keyPath  设置 表结构  里的ID 作为唯一标识符  
+            keyPath:"id",
+            //生成一个数字键
+            autoIncrement:true
+          })
+        }
+        
+        //打开成功
+        requset.onsuccess = function(res){
+          if(res.type === "success"){
+            dataDB = res.target.result;
+            //数据库打开成功调用所有数据的方法
+            getUserAll();
+          }
+        }
+        //打开失败
+        requset.onerror = function(res){
+          console.log(res);
+        }
+        
+      }
+      
+      
+      //插入数据
+      btn.onclick = function(){
+        var userInfo = {
+          id:+new Date(),
+          name: document.querySelector("#name").value,
+          phone : document.querySelector("#phone").value,
+          email : document.querySelector("#email").value,
+          blog : document.querySelector("#blog").value
+        }
+        //在该线程内开启了一个事务
+        var trans = dataDB.transaction(["userInfo"],"readwrite")
+        //设置存储对象
+        var objStore = trans.objectStore("userInfo");
+        //给存储对设置数据
+        var userMsg = objStore.put(userInfo);
+        
+        userMsg.onsuccess = function(res){
+          console.log(res);
+        }
+        userMsg.onerror = function(res){
+          console.log(res);
+        }
+      }
+      
+      //读取表中的所有数据
+      function getUserAll(){
+        var trans = dataDB.transaction(["userInfo"],"readwrite");
+        var objStore = trans.objectStore("userInfo");
+        var userLlist = objStore.getAll();
+        userLlist.onsuccess = function(res){
+          console.log(res.target.result);
+          if(res.isTrusted){
+            html = "";
+            html +="<thead><tr><th>id</th><th>姓名</th><th>电话</th><th>邮箱</th><th>操作</th></tr></thead>";
+            html += "<tbody>";
+            for(var i=0; i<res.target.result.length;i++){
+              console.log(i);
+              var info = res.target.result[i]
+              html += "<tr>";
+              html += "<td>"+info.id+"</td>";
+              html += "<td>"+info.name+"</td>";
+              html += "<td>"+info.phone+"</td>";
+              html += "<td>"+info.email+"</td>";
+              html += "<td><a href='#' onclick='removeUser(\""+info.id+"\")'>删除</a><a href='#'>修改</a></td>";
+              html += "</tr>";
+            }
+            html += "</tbody>";
+            table.innerHTML = html;
+          }
+        }
+        userLlist.onerror = function(res){
+          console.log(res);
+        }
+      }
+      
+      //删除的方法
+      function removeUser(id){
+//        e.preventDefault();
+        console.log(id)
+      }
+      
+    </script>
+  </body>
+</html>

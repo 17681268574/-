@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{
+			margin:0;
+			overflow: hidden;
+		}
+		
+	</style>
+</head>
+<body>
+
+	<canvas id="canvas" ></canvas>
+	<script type="text/javascript">
+		var canvas = document.getElementById('canvas');
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		var context = canvas.getContext("2d");
+// 背景渐变
+// 		var sky=context.createLinearGradient(0,0,0,canvas.height);
+//           sky.addColorStop(0,"#2F4F4F");
+//           sky.addColorStop(0.8,"#0D0D0D");
+//           context.fillStyle=sky;
+//           context.fillRect(0,0,canvas.width,canvas.height);
+
+// // 画200个五角星
+//           for(i=0;i<200;i++){
+//           	var x=radomIntFromRange(0,canvas.width);
+//           	var y=radomIntFromRange(0,canvas.height*0.5);
+//           	var R=radomIntFromRange(2,15);
+//           	var r=R/2;
+//             var rot=radomIntFromRange(0,360);
+//             drawStar(x,y,R,r,rot)
+//             context.fillStyle="yellow";
+//             context.fill()
+//           }
+
+//  // 大地曲线
+//  context.beginPath()
+//  context.moveTo(0,canvas.height*0.7);
+//  context.bezierCurveTo(200,250,600,400,canvas.width,canvas.height*0.9)
+//  context.lineTo(canvas.width,canvas.height);
+//  context.lineTo(canvas.width,canvas.height);
+//  context.lineTo(0,canvas.height);
+//  context.closePath;
+//  context.stroke();
+// // 大地填色
+//  var grd=context.createLinearGradient(0,0,0,canvas.height);
+//           grd.addColorStop(0.6,"#458B00");
+//           grd.addColorStop(1,"#556B2F");
+//           context.fillStyle=grd;
+//           context.fill()
+
+//           // context.fillRect(0,0,canvas.width,canvas.height);
+
+// // 星星函数
+// 		function drawStar(x,y,R,r,rot){
+// 		    context.beginPath();
+// 		      for(var i=0;i<5;i++){
+
+// 		        context.lineTo( Math.cos( (18+72*i-rot) / 180*Math.PI) *R+x , -Math.sin( (18 + 72 *i-rot) / 180 * Math.PI) *R+ y );
+// 		        context.lineTo( Math.cos( (54+72*i-rot) / 180*Math.PI) *r+x , -Math.sin( (54 + 72 *i-rot) / 180 * Math.PI) *r +y );
+		        
+// 		    }
+// 		        context.closePath();
+// 		        // context.stroke();
+// 		  }
+// 		   drawStar(300,300,300,150);
+
+
+// 		    function radomIntFromRange(min,max){
+// 			     return Math.floor(Math.random()*(max-min+1)+min);
+//    }
+		
+		context.translate(100,100);
+		context.fillRect(0,0,100,100);
+		context.fill();
+		console.log(window.innerHeight)
+	</script>
+</body>
+</html>

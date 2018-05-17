@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style type="text/css">
+	body{
+		margin:0;
+		/*overflow: hidden;*/
+	}
+	.container{
+		width: 1000px;
+		margin:0 auto; 
+		
+	}
+</style>
+<body>
+  <div class="container">
+     <canvas id="canvas" width="1000" height="500">
+    
+  		
+	 </canvas>
+   <!--  <input type="range" id="range" max="10" min="0.5" step="0.01" value="1"> -->
+  </div>
+	
+</body>
+<script type="text/javascript">
+	var canvas= document.getElementById('canvas');
+	var context=canvas.getContext("2d");
+  // var img=new Image();
+  // img.src="111.jpg"
+  // img.onload=function(){
+  //   context.drawImage(img,0,0,canvas.width,canvas.height);
+  // }
+  // var range=document.getElementById('range');
+  // range.onchange=function(){
+  //   drawImg();
+  // }
+
+  // function drawImg(){
+  //   var scale=range.value;
+  //   var imgW=scale*canvas.width;
+  //   var imgH=scale*canvas.height;
+  //   var x=canvas.width/2-imgW/2;
+  //   var y=canvas.height/2-imgH/2;
+  //   context.clearRect(0,0,canvas.width,canvas.height);
+
+  //   context.drawImage(img,x,y,imgW,imgH);
+  // }
+      context.beginPath();
+      context.rect(100,100,500,500);
+      context.fillStyle="#FFC988";
+      context.fill();
+
+      // window.addEventListener("mouseup",function(e){
+       
+      //   var x=e.clientX-canvas.getBoundingClientRect().left;
+      //   var y=e.clientY-canvas.getBoundingClientRect().top;
+        
+      //   if (context.isPointInPath(x,y)){
+      //     console.log("in Path");
+
+      //   }
+      //   else{
+      //     console.log("not in path")
+      //   };
+
+      //   })
+      
+
+      window.addEventListener("mouseup",function(e){
+        console.log(e);
+        var x=e.clientX-canvas.getBoundingClientRect().left;
+        var y=e.clientX-canvas.getBoundingClientRect().top;
+        if(context.isPointInPath(x,y)){
+          console.log("确实，是在范围内");
+        }
+        else{
+          console.log("根本不在范围内，别瞎说");
+        }
+      });
+      
+
+</script>
+</html>

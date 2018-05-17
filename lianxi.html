@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style type="text/css">
+	body{
+		margin:0;
+		/*overflow: hidden;*/
+	}
+	.container{
+		width: 1000px;
+		margin:0 auto; 
+		
+	}
+</style>
+<body>
+  <div class="container">
+     <canvas id="canvas" width="1000" height="600">
+  		
+	 </canvas>
+  </div>
+	
+</body>
+<script type="text/javascript">
+	var canvas= document.getElementById('canvas');
+	var context=canvas.getContext("2d");
+
+// 随机值
+	function randomIntFromRange(min,max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+  }
+    
+    // 数组包装
+    var dx_arr=[];
+    var dy_arr=[];
+    var x_arr=[];
+    var y_arr=[];
+    var r_arr=[];
+    var R_arr=[];
+    var G_arr=[];
+    var B_arr=[];
+
+
+
+
+
+
+   
+// // 画圆的函数
+//      function drawCircular(x,y,r,s,e){
+//     	context.arc(x,y,r,s,e)
+//     }
+
+  
+requestAnimationFrame(animate);
+    function animate(){
+
+      for(i=0;i<200;i++){
+
+      var dx=0;
+      var dy=Math.random()*(5-3)+3;
+      var x=randomIntFromRange(0,canvas.width);
+      var y=100;
+      var r=randomIntFromRange(5,30);
+      var R=randomIntFromRange(0,255);
+      var G=randomIntFromRange(0,255);
+      var B=randomIntFromRange(0,255);
+
+      // dx_arr.push(dx);
+      dy_arr.push(dy);
+      x_arr.push(x);
+      y_arr.push(y);
+      r_arr.push(r);
+      R_arr.push(R);
+      G_arr.push(G);
+      B_arr.push(B);
+    };
+      
+    	
+    	context.clearRect(0,0,canvas.width,canvas.height);
+    	for(i=0;i<200;i++){
+
+    	
+    	 // x_arr[i]=x_arr[i]+dx_arr[i];
+         y_arr[i]=y_arr[i]+dy_arr[i];
+    	// if(x_arr[i]+r_arr[i]>canvas.width||x_arr[i]<r_arr[i]){
+     //    dx_arr[i]=-dx_arr[i];
+     //  }
+      if(y_arr[i]+r_arr[i]>canvas.height||y_arr[i]<r_arr[i]){
+       for(j=0;j<10;j++){
+       	 dy_arr[i]=-dy_arr[i]-(-dy_arr/j);
+       }
+
+      }
+         context.beginPath();
+    	context.arc(x_arr[i],y_arr[i],r_arr[i],0,Math.PI*2);
+    	context.fillStyle=`rgb(${R_arr[i]},${G_arr[i]},${B_arr[i]})`;
+		context.fill();
+		}
+		
+		
+		
+		console.log(x);
+        requestAnimationFrame(animate);
+    
+    };
+      
+	var ys=1;
+    function down(){
+     y_arr[i]=y_arr[i]+dy_arr[i];
+    }
+	
+	
+
+
+
+</script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<style type="text/css">
+  body{
+    margin:0;
+    /*overflow: hidden;*/
+  }
+  #canvas{
+    margin:0px 0px 0px 400px; 
+  }
+</style>
+
+<body>
+  <canvas id="canvas" width="800" height="800">
+    
+  </canvas>
+</body>
+<script type="text/javascript">
+  
+  var canvas= document.getElementById('canvas');
+  var context=canvas.getContext("2d");
+  // 1.画圆角矩形
+  function drawRoundRect(x,y,w,h,radius){
+    context.beginPath();
+    context.arc(x+radius,y+radius,radius,Math.PI,Math.PI*1.5);
+    context.lineTo(x+w-radius,y);
+    context.arc(x+w-radius,y+radius,radius,Math.PI*1.5,0);
+    context.lineTo(x+w,y+h-radius);
+    context.arc(x+w-radius,y+h-radius,radius,0,Math.PI*0.5);
+    context.lineTo(x+radius,y+h);
+    context.arc(x+radius,y+h-radius,radius,Math.PI*0.5,Math.PI);
+    context.closePath();
+    // context.stroke();
+    context.fill();
+      };
+     context.fillStyle="#bbada0"
+     drawRoundRect(80,80,500,500,8);
+     context.fillStyle="#ccc0b3"
+     for(var i=0;i<4;i++){
+      for(var j=0;j<4;j++){
+        drawRoundRect(100+i*120,100+j*120,100,100,8);
+      }
+     }
+      
+      
+</script>
+</html>
