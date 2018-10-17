@@ -1,0 +1,498 @@
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .row{
+    margin: 0;
+    padding: 0 10px;
+    display: flex;
+    display: -webkit-flex;
+  }
+  .col{
+    flex: 1;
+    -webkit-flex:1;
+    text-align: center;
+    margin: 1px;
+    height: 40px;
+    line-height: 40px;
+    color:white;
+    border-radius: 4px;
+  }
+  .col:active{
+    background-color:#153641
+  }
+  .X-col{
+    background-color: #94CFC9;
+    font-size: 22px;
+    color: #153641;
+    font-weight: bolder;
+  }
+  .Delete{
+    background-color: #FB454F
+  }
+  .Selected{
+    background-color: #4799B7!important
+  }
+  .cor001{
+    background-color: #153641
+  }
+  .cor002{
+    background-color: #22556E
+  }
+  .cor003{
+    background-color: #4799B7
+  }
+  .cor004{
+    background-color: #6DB3BF
+  }
+  .cor005{
+    background-color: #94CFC9
+  }
+  .title{
+    height: 100%;
+    position: relative;
+  }
+ .header-top{
+  margin:12.2vw 0 2vw 0;
+ }
+ .Calculator{
+   position: relative;
+   /* height: 34vh; */
+   border-top: #22556E 1px solid;
+   margin-bottom: 10px;
+ }
+ .Calculator-pay{
+   font-size: 20px;
+   color: #E83338
+ }
+ .Calculator-species{
+   font-size: 17px;
+   color: #153641
+ }
+ .Calculator-titel{
+   margin: 15px 10px;
+ }
+ .swipe{
+   height: 42vh;
+   position: relative;
+ }
+ .swipe-item{
+   margin: 0;
+   padding: 0;
+   line-height: 30px;
+   text-align: center;
+   font-size: 16px;
+   overflow:scroll;
+ }
+ .item-expend{
+   height: 35px;
+   width: 100%;
+   background-color: #94CFC9;
+   color: #22556E;
+   font-weight: bolder;
+   position: absolute;
+   top: 0;
+   z-index: 1;
+ }
+ main > div.mint-swipe.swipe > div.mint-swipe-items-wrap{
+   height: 37vh;
+ }
+ .All-Project{
+  margin-top: 40px;
+ }
+ .Any-Project{
+   margin:10px 3px;
+   border: #22556E 2px solid;
+   color:#153641;
+   background-color: white;
+ }
+ .Calculator-screen{
+   position: absolute;
+   right: 10px;
+   font-size: 25px;
+ }
+ .foots{
+   /* margin: 0 auto; */
+   position: relative;
+   bottom: 0;
+   width: 100%;
+ }
+ .foot{
+   color: white;
+   text-align: center;
+   line-height: 40px;
+   margin: -2px;
+   padding: 0;
+   display: inline-block;
+   height: 35px;
+   width: 33.3vw;
+ }
+ /* 统计表达样式 */
+ .form-Sat{
+   margin-top: 10px;
+   height: 100%;
+   width: 100%;
+ }
+ .form-title{
+   height: 35px;
+   background-color: #22556E
+ }
+ .form-Msg{
+   position: relative;
+   height: 30px;
+   width: 100%;
+   border: red solid 1px;
+   line-height: 30px;
+ }
+ .form-Msg_m,a{
+   display: inline-block;
+   position: relative;
+ }
+ .form-Msg_m{
+   float:left;
+   left: 0;
+ }
+.form-Msg_a{
+  right: 0;
+  float: right;
+}
+.datetime{
+  /* 时间表 */
+  width: 100%;
+  height: 40%
+}
+</style>
+<template>
+    <div>
+      <div class="title">
+          <mt-header title="日常记账Account charge" fixed class="cor001">
+              <router-link to="/" slot="left">
+                <mt-button icon="back">返回</mt-button>
+              </router-link>
+              <mt-button icon="more" slot="right"></mt-button>
+            </mt-header>
+      </div>
+      <header class="header-top" @click="openPicker">
+        <mt-header :title="(record.time.y)+'年'+(record.time.m)+'月'+(record.time.d)+'日'+' ▼'" class="cor004">
+          <router-link to="/" slot="left">
+            </router-link>
+          </mt-header>
+      </header>
+      <mt-datetime-picker
+        class="datetime"
+        v-model="pickerVisible"
+        ref="picker"
+        type="date"
+        year-format="{value} 年"
+        month-format="{value} 月"
+        date-format="{value} 日"
+        @confirm="confirmTime"
+        @cancel="closePicker"
+        :startDate="times.startDate"
+        :endDate="times.endDate">
+      </mt-datetime-picker>
+      <main>
+        <div class="Calculator">
+          <div class="Calculator-titel">
+              <i class="fa fa-th"></i>
+              <a class="Calculator-pay">支出</a>
+              <a class="Calculator-species">餐饮伙食</a>
+              <a class="Calculator-screen">{{ numbers }}</a>
+          </div>
+          <div class="row">
+            <div class="cor002 col" @click="input('1')">1
+            </div>
+            <div class="cor002 col" @click="input('2')">2
+            </div>
+            <div class="cor002 col" @click="input('3')">3
+            </div>
+            <div class="X-col col " @click="Clear()">X
+            </div>
+          </div>
+          <div class="row">
+              <div class="cor002 col" @click="input('4')">4
+              </div>
+              <div class="cor002 col" @click="input('5')">5
+              </div>
+              <div class="cor002 col" @click="input('6')">6
+              </div>
+              <div class="Delete col" @click="Delete()">
+                  <i class="fa fa-long-arrow-left fa-lg" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="row">
+                <div class="cor002 col" @click="input('7')">7
+                </div>
+                <div class="cor002 col" @click="input('8')">8
+                </div>
+                <div class="cor002 col" @click="input('9')">9
+                </div>
+                <div class="col cor005" @click="save()">
+                    <i class="fa fa-check-square-o fa-lg" aria-hidden="true">
+                    </i>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="cor002 col" @click="input('00')">00
+                  </div>
+                  <div class="cor002 col" @click="input('0')">0
+                  </div>
+                  <div class="cor002 col" @click="input('.')">.
+                  </div>
+                  <div class="col cor003">END
+                  </div>
+                </div>
+        </div>
+        <!-- 下面是轮播图 -->
+          <mt-swipe :auto="0" class="swipe">
+            <mt-swipe-item class="swipe-item">
+                <mt-header title="" class="item-expend">
+                    <router-link to="/" slot="left">
+                      <mt-button>支出类</mt-button>
+                    </router-link>
+                    <mt-button slot="right">
+                        <i class="fa fa-angle-double-right fa-lg" aria-hidden="true"></i>
+                    </mt-button>
+                </mt-header>
+                <div class="All-Project">
+                    <mt-button size="small" class="Any-Project" :class="{'Selected':record.Class === 0 && record.subClass === i }" v-for="(el,i) in classif[0]" :key="i" @click="PayRE(el,i)" type="danger">
+                        {{ el }}
+                      </mt-button>
+                </div>
+            </mt-swipe-item>
+            <mt-swipe-item class="swipe-item">
+                <mt-header title="" class="item-expend">
+                    <router-link to="/" slot="right">
+                      <mt-button>收入类</mt-button>
+                    </router-link>
+                    <mt-button slot="left">
+                        <i class="fa fa-angle-double-left fa-lg" aria-hidden="true"></i>
+                    </mt-button>
+                </mt-header>
+                <div class="All-Project">
+                    <mt-button size="small" type="danger" class="Any-Project" :class="{'Selected':record.Class === 1 && record.subClass === i }" @click="IncomeRE(el,i)" v-for="(el,i) in classif[1]" :key="i">
+                        {{ el }}
+                      </mt-button>
+                </div>
+            </mt-swipe-item>
+          </mt-swipe>
+          <div class="foots">
+            <div class="foot cor001">支出：{{totalPAY}}元</div>
+            <div class="foot cor002">收入：{{totalIN}}元</div>
+            <div class="foot cor003">结余：{{totalIN - totalPAY}}元</div>
+          </div>
+      </main>
+      <div class="form-Sat">
+          <mt-header title="" class="form-title">
+              <router-link to="/" slot="left">
+                <mt-button>当月结账日 | 类别 | 收支子类</mt-button>
+              </router-link>
+              <mt-button slot="right">
+                <mt-button>金额（元）</mt-button>
+              </mt-button>
+          </mt-header>
+          <div class="form-Msg" v-for="(el,i) in records" :key="i">
+            <a class="form-Msg_m">{{el.time.y +'-' + el.time.m + '-' + el.time.d}} | {{el.ClassN}} | {{el.subClassN}}</a>
+            <a class="form-Msg_a">{{el.val | currency}}</a>
+          </div>
+      </div>
+    </div>
+</template>
+<script>
+export default {
+  name: 'Home',
+  components: {
+  },
+  data () {
+    return {
+      name: 'Home',
+      pickerVisible: '',
+      times: {
+        time: {
+          y: 2010,
+          m: '01',
+          d: '01'
+        },
+        startDate: new Date('2010-01-01'),
+        endDate: new Date()
+      },
+      title: '移动应用开发项目：手机记账App',
+      classif: [
+        [
+          '餐饮伙食', '出行交通', '休闲娱乐', '话费网费',
+          '生活日用', '服装饰品', '电器家私', '教育培训',
+          '育儿养老', '医疗保健', '红包礼金', '房租按揭',
+          '善款彩票', '保险投资', '数码产品', '办公学习',
+          '社交游戏', '书籍咨询', '孩子长辈', '其他支出'
+        ],
+        [
+          '工资收入', '兼职收入', '理财收入', '礼金收入',
+          '其他收入'
+        ]
+      ],
+      numbers: '0',
+      subClassN: '餐饮伙食', // 子类名初始
+      ClassN: '收入', // 大类名初始
+      record: {
+        time: {
+          y: 2010,
+          m: '01',
+          d: '01'
+        },
+        date: new Date().getTime(),
+        val: 0,
+        Class: 0, // 0是收入，1是支出
+        subClass: 0, // 这是子类
+        subClassN: '', // 子类名
+        ClassN: '' // 大类名
+      },
+      records: [],
+      abc: 0,
+      totalPAY: 0,
+      totalIN: 0
+    }
+  },
+  filters: {
+    currency (en, s) {
+      var c = s || '￥'
+      var v = en * 1
+      return isNaN(v) ? '' : c + v.toFixed(2)
+    },
+    date (en) {
+      var d = new Date(en)
+      var yy = d.getFullYear()
+      var mm = ('0' + d.getMonth()).slice(-2)
+      var dd = ('0' + d.getDate()).slice(-2)
+      return yy + '-' + mm + '-' + dd
+    },
+    // 收入支出清单基本分类信息
+    cla (en) {
+      if (en === 0 || en === '0') {
+        return '支出'
+      } else {
+        return '收入'
+      }
+    }
+  },
+  methods: {
+    openPicker () {
+      // 时间选择器的打开方式
+      this.$refs.picker.open()
+    },
+    closePicker () {
+      // 时间选择器的关闭方式
+      this.$refs.picker.close()
+    },
+    confirmTime (date) {
+      // 时间选择器返回值处理方法
+      const y = date.getFullYear()
+      let m = date.getMonth() + 1
+      m = m < 10 ? '0' + m : m
+      let d = date.getDate()
+      d = d < 10 ? ('0' + d) : d
+      this.times.time = {y, m, d}
+      this.record.time = this.times.time
+      return {y, m, d}
+    },
+    handleConfirm () {
+      // 输出格式化后的时间
+      console.log(this.formatDate(this.$refs.picker.value))
+    },
+    // 输入器方法
+    input (i) {
+      let _numbers = this.numbers.toString()
+      if (this.numbers === '0' || this.numbers === 0) {
+        if (i === 0 || i === '00') {
+          this.numbers = '0'
+        } else if (i === '.') {
+          this.numbers = '0' + '' + '.'
+        } else {
+          this.numbers = i
+        }
+      } else {
+        if (_numbers.indexOf('.') !== -1 && i === '.') {
+        } else {
+          this.numbers = this.numbers + '' + i
+        }
+      }
+    },
+    // 用于删除出入器里的数字
+    Delete () {
+      if (this.numbers.length > 0) {
+        var _number = this.numbers
+        this.numbers = _number.substring(0, _number.length - 1)
+      } if (this.numbers.length <= 0) {
+        this.numbers = '0'
+      }
+    },
+    Clear () {
+      this.numbers = '0'
+    },
+    // 点击切换各类支出信息的方法
+    PayRE (el, i) {
+      this.record.Class = 0
+      this.record.subClass = i
+      this.subClassN = el
+      this.ClassN = '支出'
+      console.log(this.records)
+    },
+    // 点击切换各类支出信息的方法
+    IncomeRE (el, i) {
+      this.record.Class = 1
+      this.record.subClass = i
+      this.subClassN = el
+      this.ClassN = '收入'
+    },
+    // 意见储存各类信息，并进入本地数据库
+    save () {
+      this.record.subClassN = this.subClassN
+      this.record.ClassN = this.ClassN
+      this.records = this.load()
+      this.records.push(this.record)
+      localStorage['__RECORDS__'] = JSON.stringify(this.records)
+      this.totalPAY = this.TotalPay(this.records)
+      this.totalIN = this.TotalIn(this.records)
+      this.numbers = '0'
+    },
+    load () {
+      this.record.val = this.numbers
+      this.record.time = this.times.time
+      this.record.date = new Date().getTime()
+      var d = localStorage['__RECORDS__']
+      if (typeof d !== 'undefined' && d.length > 36) {
+        return JSON.parse(d)
+      }
+      return []
+    },
+    // 用于计算收入和支出的总额
+    TotalPay (a) {
+      var totalPay = 0
+      // console.log(a)
+      a.map(el => {
+        // console.log(el)
+        if (el.Class === 0 || el.Class === '0') {
+          totalPay += Number(el.val)
+        } else {}
+      })
+      return totalPay
+    },
+    TotalIn (a) {
+      var totalIn = 0
+      a.map(el => {
+        if (el.Class === 1 || el.Class === '1') {
+          totalIn += Number(el.val)
+        } else {}
+      })
+      return totalIn
+    }
+  },
+  computed: {
+  },
+  created () {
+    this.records = this.load()
+    console.log('页面生成完毕')
+  }
+}
+
+</script>
