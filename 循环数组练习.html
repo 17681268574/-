@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>     
+<script>
+    //同时满足被3、5整除，且是基数
+    var j = 1;
+    var a = new Array(10);
+    for(i=0;i<a.length;i++){
+        for(;;j++){
+            if(j%3==0 && j%5==0 && j%2==1){
+                a[i] = j;
+                j++;//如果这里不进行++操作，那么j在break之后依然会是上一步的结果15，因为15满足这样的条件，所以答案不变
+                break;
+            }
+        }
+    }
+    document.write(a);
+</script>
+</html>

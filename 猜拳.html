@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>     
+<script>
+    var fist =['石头','剪子','布'];
+    var a = prompt('请出拳');
+    var b = parseInt(Math.random()*3+0);
+    console.log(fist[b])
+    if(fist[b]==a){
+        document.write('我们出拳：'+ a +'<br/>')
+        document.write('电脑出拳：'+ fist[b] +'<br/>')
+        document.write('结果：平局')
+    }else if(fist[b] == '石头'&& a =='剪子'||fist[b] == '剪子'&& a =='布'||fist[b] == '布'&& a =='石头'){
+        document.write('我们出拳：'+ a +'<br/>')
+        document.write('电脑出拳：'+ fist[b])
+        document.write('结果：输了')
+    }else{
+        document.write('我们出拳：'+ a +'<br/>')
+        document.write('电脑出拳：'+ fist[b] +'<br/>')
+        document.write('结果：赢了')
+    }
+</script>
+</html>

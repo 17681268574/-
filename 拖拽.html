@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        #img{
+            position: absolute;
+            height: 200px;
+            width: 200px;
+            background-image: url("./pic2.jpg");
+            background-size: 200px 200px;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="img"></div>
+    </div>
+</body>
+<script>
+    var img= document.getElementById('img')
+    document.onmousedown = function(e){
+        document.onmousemove = function(e){
+        var evt = e || window.event;
+        var x= evt.clientX-50;
+        var y= evt.clientY-50;
+        img.style.top = y+"px";
+        img.style.left = x+"px";
+        }
+    }
+    document.onmouseup = function(){
+        document.onmousemove = null;
+        }
+</script>
+</html>

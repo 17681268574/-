@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       span{
+            color: #F40601;
+            font-weight: 900;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="textBox" onkeyup="test()"><span id="content"></span>
+</body>
+<script>
+    var textBox = document.getElementById("textBox");
+    var content = document.getElementById("content");
+    var test = function(){
+        var tb = textBox.value
+        if(tb.length<6 || tb.length>16){
+            content.innerHTML = "密码必须是6~16位";
+        }else if(isNaN(tb)==false){
+            content.innerHTML = "弱";
+        }else{
+            var da = false;
+            var xiao = false;
+            for(var i=0;i<tb.length;i++){
+                if(tb.charCodeAt(i)>=97 && tb.charCodeAt(i)<=122){
+                    xiao = true;
+                }
+                if(tb.charCodeAt(i)>=65 &&tb.charCodeAt(i)<=90){
+                    da = true;
+                }
+            }
+            console.log(da,xiao)
+            if(da == true && xiao == true){
+                content.innerHTML = "强"
+            }else{
+                content.innerHTML = "中"
+            }
+        }
+    }
+</script>
+</html>

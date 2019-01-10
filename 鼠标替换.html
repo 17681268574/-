@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        img{
+            position: absolute;
+            height: 100px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img src="./pic2.jpg" id="img">
+    </div>
+</body>
+<script>
+    var img= document.getElementById('img')
+    window.onmousemove = function(e){
+        var evt = e || window.event;
+        var x= evt.clientX-50;
+        var y= evt.clientY-50;
+        img.style.top = y+"px";
+        img.style.left = x+"px";
+    }
+</script>
+</html>

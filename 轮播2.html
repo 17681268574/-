@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+     #tv{
+         width: 640px;
+         height: 220px;
+         margin: 0 auto;
+         border: 1px solid black;
+         overflow: hidden;
+     }
+     #container{
+         font-size: 0;
+         border: 1px solid red;
+         width: 500%;
+     }
+     #content1{
+         display: inline-block;
+     }
+     #content2{
+         display: inline-block;
+     }
+     img{
+         height: 220px;
+     }
+    </style>
+</head>
+<body>
+    <div id="tv">
+        <div id="container">
+            <div id="content1">
+                <img src="./pic1.jpg">
+                <img src="./pic2.jpg">
+                <img src="./pic3.jpg">
+                <img src="./pic4.jpg">
+            </div>
+            <div id="content2">
+            </div>
+        </div>
+    </div>
+</body>
+    <script>
+        var content1 = document.getElementById("content1")
+        var content2 = document.getElementById("content2")
+        var container = document.getElementById("container")
+        var tv = document.getElementById("tv")
+        content2.innerHTML = content1.innerHTML;
+        var marquee = function(){
+            tv.scrollLeft +=5;
+            if(tv.scrollLeft>=content1.offsetWidth){
+                tv.scrollLeft = 0;
+            }
+        }
+         setInterval(marquee,30);
+</script>
+</html>

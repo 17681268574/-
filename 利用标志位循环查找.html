@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>     
+<script>
+    //题干：搜索名字
+    var a = ['张三','李四','王五','赵柳','李阿姨','赵阿姨']
+    var b = prompt('请搜索姓名')
+    var flag = false;//设置一个标志，当搜索到的时候就改变标志，如果最后发现标志没有改变则判定没有找到
+    for(i=0;i<a.length;i++){
+        if(a[i]==b){
+            alert(i);
+            flag = true;
+            break;
+        }
+    }
+    if(flag==false){
+            alert('对不起找不到')
+        }
+</script>
+</html>

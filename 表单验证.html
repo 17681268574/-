@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel='stylesheet' href="./css1.css">
+    <style>
+    </style>
+</head>
+<body>
+    <input type="text" id="Username" placeholder="请输用户名"></div><span id="yanzheng1"></span><br/>
+    <input type="password" id="Password" placeholder="请输入密码"></div><span id="yanzheng2"></span><br/>
+    <input type="password" id="ContPas" placeholder="请确认密码"></div><span id="yanzheng3"></span><br/>
+    <input type="radio" name="sex">男<input type="radio" name="sex">女</div><span id="yanzheng4"></span><br/>
+
+    <div id="btn1">验证</div>
+</body>     
+<script type="text/javascript">
+    var btn1 = document.getElementById('btn1');
+    var Username = document.getElementById('Username');
+    var Password = document.getElementById("Password");
+    var ContPas = document.getElementById("ContPas");
+    var yanzheng1 = document.getElementById('yanzheng1');
+    var yanzheng2 = document.getElementById('yanzheng2');
+    var yanzheng3 = document.getElementById('yanzheng3');
+    var yanzheng4 = document.getElementById('yanzheng4');
+    var sex = document.getElementsByName('sex')
+    var flag = false;
+    function sexCk(){
+        for(var i=0;i<sex.length;i++){
+        if(sex[i].checked==true){
+            flag = true;
+            break;
+        }
+    }
+        if(flag==false){
+            yanzheng4.innerHTML = '请选择性别'
+        }else{
+            yanzheng4.style.color = 'green';
+            yanzheng4.innerHTML = '√';
+        }
+    }
+    
+    function UsernameCk(){
+       if(Username.value.length<6||Username.length>16){
+           yanzheng1.innerHTML = '账号必须大于6位且小于16位'
+       }else{
+           yanzheng1.style.color = 'green'
+           yanzheng1.innerHTML = '√'
+       }
+       console.log()
+    }
+    function passwordCk(){
+        if(Password.value.length<6||Password.length>16){
+           yanzheng2.innerHTML = '密码必须大于6位且小于16位'
+       }else{
+           yanzheng2.style.color = 'green'
+           yanzheng2.innerHTML = '√'
+       }
+    }
+    function passwordCt(){
+        if(Password.value != ContPas.value){
+           yanzheng3.innerHTML = '对不起，两次输入结果不一致'
+           yanzheng3.style.color = 'red'
+       }else{
+           yanzheng3.style.color = 'green'
+           yanzheng3.innerHTML = '√'
+       }
+    }
+    btn1.onclick=function(){
+        UsernameCk();
+        passwordCk();
+        passwordCt();
+        sexCk();
+    }
+</script>
+</html>
